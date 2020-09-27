@@ -5,13 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.booksam.Book
+import com.example.repo.Book
 import com.example.booksam.R
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
+
     private var books = emptyList<Book>()
 
-    internal fun setBookList(books: List<Book>){
+
+    internal fun setWords(books: List<Book>) {
         this.books = books
         notifyDataSetChanged()
     }

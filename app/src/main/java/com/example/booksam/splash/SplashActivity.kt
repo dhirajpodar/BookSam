@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import com.example.booksam.R
 import com.example.booksam.main.MainActivity
-import kotlinx.coroutines.delay
-import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -15,13 +13,36 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        initSplash()
+        openMainActivity()
+
     }
 
-    private fun initSplash() {
+
+    private fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
         Handler().postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(intent)
             finish()
-        }, 2000)
+        }, 3000)
     }
+
+    /*private fun getData() {
+        val compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(
+            Observable.create(ObservableOnSubscribe<Response> { emitter ->
+                val bookRepo = BookRepoImpl.getInstance(this)
+                val books = bookRepo.getAllBooks()
+
+                emitter.onNext(Response(Constants.SUCCESS, books))
+
+            }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    val books = response.data as MutableLiveData<List<Book>>
+                    openMainActivity(books)
+                }, {
+                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
+                })
+        )
+    }*/
 }

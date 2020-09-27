@@ -3,6 +3,7 @@ package com.dhiraj.base
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -29,6 +30,7 @@ abstract class BaseActivity<T:ViewDataBinding,V : ViewModel> :AppCompatActivity(
     performDataBinding()
   }
 
+
   private fun performDataBinding() {
     viewDataBinding = DataBindingUtil.setContentView(this,getLayout())
   }
@@ -45,4 +47,6 @@ abstract class BaseActivity<T:ViewDataBinding,V : ViewModel> :AppCompatActivity(
   fun <U> openActivity(mClass: Class<U>){
     startActivity(Intent(getContext(),mClass))
   }
+
+
 }

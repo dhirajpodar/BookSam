@@ -6,6 +6,9 @@
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
+/.idea/sonarlint
+mydemo/
+app/google-services.json
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build

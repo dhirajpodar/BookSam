@@ -1,12 +1,13 @@
-package com.example.booksam
+package com.example.repo
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "book_table")
 data class Book(
-    @PrimaryKey(autoGenerate = true) var id: Int,
+    @PrimaryKey @ColumnInfo(name = "title")
     var title: String,
-    var author: String
+    var author: String?
 
 )

@@ -1,7 +1,6 @@
 package com.example.repo
 
 import android.content.Context
-import androidx.room.CoroutinesRoom
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -11,12 +10,12 @@ import kotlinx.coroutines.CoroutineScope
 abstract class BookDataBase : RoomDatabase() {
     abstract fun bookDao(): BookDao
 
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE :BookDataBase? = null
+        private var INSTANCE: BookDataBase? = null
 
 
-        fun getInstance(context: Context,scope: CoroutineScope): BookDataBase{
+        fun getInstance(context: Context, scope: CoroutineScope): BookDataBase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

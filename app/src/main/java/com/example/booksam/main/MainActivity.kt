@@ -8,13 +8,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dhiraj.base.BaseActivity
+import com.example.android.service.RetrofitClient
 import com.example.booksam.BR
 import com.example.repo.Book
 import com.example.booksam.R
 import com.example.booksam.add.AddActivity
 import com.example.booksam.databinding.ActivityMainBinding
+import com.example.extension.setLog
 import com.example.extension.toObj
+import com.example.repo.service.response.WordMeaning
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val REQUEST_CODE = 100
@@ -23,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        supportActionBar?.hide()
         setViewModel()
         initRecyclerView()
         initObservers()
@@ -45,8 +54,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun initRecyclerView() {
         bookAdapter = BookAdapter()
-        rv_books.layoutManager = LinearLayoutManager(this)
-        rv_books.adapter = bookAdapter
+        rv_itemView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_itemView.adapter = bookAdapter
     }
 
 
@@ -66,9 +75,36 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 val dataInString = it.getStringExtra("SUCCESS")
                 val book = dataInString?.toObj(Book::class.java)!!
                 mainViewModel.insert(book)
+//                getMeaning(book.title)
                 Unit
             }
         }
+    }
+
+    private fun getMeaning(title: String) {
+        val compositeDisposable = CompositeDisposable()
+        val disposable = Observable.create(ObservableOnSubscribe<WordMeaning> { emitter ->
+
+            try {
+                val apiService = RetrofitClient.getApiService()
+                val response = apiService.getMeaning(title)
+                val wordMeaning = response as List<WordMeaning>
+                emitter.onNext(wordMeaning[0])
+            } catch (e: Exception) {
+                emitter.onError(e.fillInStackTrace())
+            }
+        })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ dictionary ->
+                val defination = dictionary.meanings[0].definitions[0].definition
+                val partOfSpeech = dictionary.meanings[0].partOfSpeech
+                val audio = dictionary.phonetics[0].audio
+            }, {
+                setLog(it.localizedMessage)
+            })
+
+        compositeDisposable.add(disposable)
     }
 
 

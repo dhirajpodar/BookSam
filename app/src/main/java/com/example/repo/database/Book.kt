@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey
 data class Book(
     @PrimaryKey @ColumnInfo(name = "title")
     var title: String,
-    var author: String?
+    var author: String,
+    var genre: String,
+    var rating: Float,
+    var favourite: Boolean
 
 )

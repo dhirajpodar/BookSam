@@ -13,8 +13,10 @@ import com.example.booksam.BR
 import com.example.repo.Book
 import com.example.booksam.R
 import com.example.booksam.add.AddActivity
+import com.example.booksam.bookdetail.BookDetail
 import com.example.booksam.databinding.ActivityMainBinding
 import com.example.extension.setLog
+import com.example.extension.toJsonString
 import com.example.extension.toObj
 import com.example.repo.service.response.WordMeaning
 import io.reactivex.Observable
@@ -25,10 +27,11 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionSelectedListener {
     private val REQUEST_CODE = 100
     private lateinit var mainViewModel: MainViewModel
     private var bookAdapter: BookAdapter? = null
+    private var books: List<Book>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun initObservers() {
         mainViewModel.books.observe(this, Observer { books ->
-            books?.let { bookAdapter?.setWords(it) }
+            books?.let {
+                this.books = it
+                bookAdapter?.setWords(it)
+            }
         })
     }
 
@@ -53,7 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun initRecyclerView() {
-        bookAdapter = BookAdapter()
+        bookAdapter = BookAdapter(this)
         rv_itemView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_itemView.adapter = bookAdapter
     }
@@ -121,6 +127,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onDestroy() {
         mainViewModel.onClear()
         super.onDestroy()
+    }
+
+    override fun optionPicked(option: String, position: Int) {
+        if (option.equals("SUMMARY")) {
+            books?.let {
+                val book = books!!.get(position)
+                val intent = Intent(this, BookDetail::class.java)
+                intent.putExtra("book_data", book.toJsonString())
+                startActivity(intent)
+            }
+        }
     }
 }
 

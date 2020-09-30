@@ -22,27 +22,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Book Name"/>
+                android:text="Book Name"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_book_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="enter book name"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:hint="enter book name" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Author Name"
-                android:layout_marginTop="16dp"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="enter Author"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:hint="enter Author" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Genre"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Select Genre" />
+
+
+            <Switch
+                android:id="@+id/switch_fav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Favourite" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Rating"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -52,6 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
-            android:text="add"/>
+            android:text="add" />
     </RelativeLayout>
 </layout>

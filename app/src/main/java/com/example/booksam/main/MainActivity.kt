@@ -4,15 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.Html
 import android.view.View
 import android.view.WindowManager
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +28,6 @@ import com.example.extension.setLog
 import com.example.extension.toJsonString
 import com.example.extension.toObj
 import com.example.repo.service.response.WordMeaning
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -45,6 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
     private lateinit var mainViewModel: MainViewModel
     private var bookAdapter: BookAdapter? = null
     private var books: List<Book>? = null
+    private lateinit var dots: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,18 +65,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
     private fun initViewPager() {
         val list = Utils.getFacts()
         viewPager_image.adapter = VpImageAdapter(list)
-
+        indicator.setViewPager(viewPager_image)
         initTimer()
-        /*viewPager_image.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                setActiveDot(position)
-            }
-        })
-        TabLayoutMediator(tab_layout, viewPager_image) { tab, position ->
-            viewPager_image.setCurrentItem(tab, true)
-        }.attach()*/
+
     }
+
 
     private fun initTimer() {
         object : CountDownTimer(10000, 1000) {

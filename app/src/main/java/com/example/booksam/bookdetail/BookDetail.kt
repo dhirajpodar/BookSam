@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
+import androidx.core.view.get
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -45,15 +46,11 @@ class BookDetail : BaseActivity<ActivityBookDetailBinding, BookDetailViewModel>(
     }
 
     private fun initTabLayout() {
-
-        TabLayoutMediator(ty_tabs, viewPager) { _, _ -> }.attach()
-        val tabStips = ty_tabs.getChildAt(0) as LinearLayout
-        tabStips.getChildAt(0).setOnClickListener {
-            viewPager.currentItem = 0
-        }
-        tabStips.getChildAt(1).setOnClickListener {
-            viewPager.currentItem = 1
-        }
+        val tabTiles = arrayOf("Words", "Phrases")
+        TabLayoutMediator(ty_tabs, viewPager) { tab, position ->
+            tab.text = tabTiles[position]
+            viewPager.setCurrentItem(tab.position, true)
+        }.attach()
     }
 
     private fun initViewPager() {

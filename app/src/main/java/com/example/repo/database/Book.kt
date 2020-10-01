@@ -11,6 +11,7 @@ data class Book(
     var author: String,
     var genre: String,
     var rating: Float,
-    var favourite: Boolean
+    var favourite: Boolean,
+
 
 )

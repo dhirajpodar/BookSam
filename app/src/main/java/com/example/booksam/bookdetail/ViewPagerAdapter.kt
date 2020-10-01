@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.booksam.R
 import com.example.repo.Book
 import com.example.repo.database.Word
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.tab_word.view.*
 
 class ViewPagerAdapter(val book: Book) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,6 +25,7 @@ class ViewPagerAdapter(val book: Book) : RecyclerView.Adapter<RecyclerView.ViewH
         this.context = parent.context
         if (viewType == WORDS_TAB) {
             view = LayoutInflater.from(parent.context).inflate(R.layout.tab_word, parent, false)
+
             return WordViewHolder(view)
         } else {
             view = LayoutInflater.from(parent.context).inflate(R.layout.tab_phrase, parent, false)

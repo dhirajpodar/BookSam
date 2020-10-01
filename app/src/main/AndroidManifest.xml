@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".bookdetail.BookDetail"></activity>
-        <activity android:name=".add.AddActivity" />
+        <activity
+            android:name=".add.AddActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+
         <activity android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -63,3 +63,15 @@ l
 <app/src/main/java/com/example/repo/service/RetrofitClient.kt,a/5/a559671d13382ddda159bff3062dbf082957eb1f
 r
 Bapp/src/main/java/com/example/repo/service/response/Definitions.kt,0/c/0c6ad4828526333aa4bb916d1b62594ac7d6c948
+t
+Dapp/src/main/java/com/example/booksam/main/OptionSelectedListener.kt,e/b/ebce908cab4a55f650db859d5ea8f92964d162cb
+w
+Gapp/src/main/java/com/example/booksam/bookdetail/BookDetailViewModel.kt,f/d/fddb8c726292e650e1156a7dc061f0f71e67188c
+c
+3app/src/main/java/com/example/repo/database/Word.kt,8/3/83ca37a30e0daa09811632a46ab09ae54bd27e3c
+o
+?app/src/main/java/com/example/booksam/bookdetail/WordAdapter.kt,6/7/67967d3ffb5ea411979f63f0a925762766b809b5
+t
+Dapp/src/main/java/com/example/booksam/bookdetail/ViewPagerAdapter.kt,7/f/7ffde9c69fb7329e69385b0345d34f9208241243
+n
+>app/src/main/java/com/example/booksam/bookdetail/BookDetail.kt,8/1/81a57033cf1ce20e923c49237faa1dd3224b12c7

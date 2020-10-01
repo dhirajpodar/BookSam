@@ -19,6 +19,12 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
     private val CODE = "SUCCESS"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         initView()
     }
 
@@ -42,6 +48,9 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 
     override fun getLayout(): Int = R.layout.activity_add
 

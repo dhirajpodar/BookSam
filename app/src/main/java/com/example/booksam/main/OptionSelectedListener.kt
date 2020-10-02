@@ -1,5 +1,7 @@
 package com.example.booksam.main
 
+import com.example.common.Option
+
 interface OptionSelectedListener {
-    fun optionPicked(option: String, position: Int)
+    fun optionPicked(option: Option, position: Int)
 }

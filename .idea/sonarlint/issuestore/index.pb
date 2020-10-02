@@ -75,3 +75,5 @@ t
 Dapp/src/main/java/com/example/booksam/bookdetail/ViewPagerAdapter.kt,7/f/7ffde9c69fb7329e69385b0345d34f9208241243
 n
 >app/src/main/java/com/example/booksam/bookdetail/BookDetail.kt,8/1/81a57033cf1ce20e923c49237faa1dd3224b12c7
+l
+<app/src/main/java/com/example/booksam/main/VpImageAdapter.kt,b/d/bd7c06e00a5885f2011bd309fe154b7706a3590f

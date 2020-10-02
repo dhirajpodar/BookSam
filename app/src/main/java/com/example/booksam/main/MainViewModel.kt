@@ -6,17 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.base.BaseAndroidViewModel
+import com.example.common.Genre
 import com.example.repo.Book
-import com.example.repo.BookDataBase
 import com.example.repo.BookDataBase.Companion.getInstance
 import com.example.repo.BookRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val context: Application) : BaseAndroidViewModel(context) {
+class MainViewModel(context: Application) : BaseAndroidViewModel(context) {
     private var repository: BookRepository
     val books: LiveData<List<Book>>
-
 
     init {
         val bookDao = getInstance(context, viewModelScope).bookDao()
@@ -26,10 +25,11 @@ class MainViewModel(private val context: Application) : BaseAndroidViewModel(con
 
     fun insert(book: Book) = viewModelScope.launch(IO) {
         repository.insert(book)
-
     }
 
-
+    fun update(book: Book) = viewModelScope.launch(IO) {
+        repository.update(book)
+    }
 
 
 }

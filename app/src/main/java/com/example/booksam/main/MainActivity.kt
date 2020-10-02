@@ -9,12 +9,9 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.dhiraj.base.BaseActivity
 import com.example.Utils
 import com.example.android.service.RetrofitClient
@@ -24,11 +21,13 @@ import com.example.booksam.R
 import com.example.booksam.add.AddActivity
 import com.example.booksam.bookdetail.BookDetail
 import com.example.booksam.databinding.ActivityMainBinding
+import com.example.common.Crud
+import com.example.common.Genre
+import com.example.common.Option
 import com.example.extension.setLog
 import com.example.extension.toJsonString
 import com.example.extension.toObj
 import com.example.repo.service.response.WordMeaning
-import com.google.android.material.tabs.TabLayoutMediator
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,9 +39,9 @@ import java.lang.Exception
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionSelectedListener {
     private val REQUEST_CODE = 100
     private lateinit var mainViewModel: MainViewModel
-    private var bookAdapter: BookAdapter? = null
+    private var bookAdapterSpiritual: BookAdapter? = null
+    private var bookAdapterBusiness: BookAdapter? = null
     private var books: List<Book>? = null
-    private lateinit var dots: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,9 +92,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
         mainViewModel.books.observe(this, Observer { books ->
             books?.let {
                 this.books = it
-                bookAdapter?.setWords(it)
+                bookAdapterSpiritual?.setBooks(it.filter { g -> g.genre == Genre.SPIRITUAL.genre })
+                bookAdapterBusiness?.setBooks(it.filter { g -> g.genre == Genre.BUSINESS.genre })
             }
         })
+
+
     }
 
 
@@ -105,9 +107,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
     }
 
     private fun initRecyclerView() {
-        bookAdapter = BookAdapter(this)
-        rv_itemView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rv_itemView.adapter = bookAdapter
+        bookAdapterSpiritual = BookAdapter(this)
+        rv_genre_spiritual.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_genre_spiritual.adapter = bookAdapterSpiritual
+
+        bookAdapterBusiness = BookAdapter(this)
+        rv_genre_business.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_genre_business.adapter = bookAdapterBusiness
     }
 
 
@@ -125,38 +133,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val dataInString = it.getStringExtra("SUCCESS")
+                val operation = it.getStringExtra("crud")
                 val book = dataInString?.toObj(Book::class.java)!!
-                mainViewModel.insert(book)
-//                getMeaning(book.title)
-                Unit
+                when (operation) {
+                    Crud.ADD.name -> mainViewModel.insert(book)
+                    Crud.UPDATE.name -> mainViewModel.update(book)
+                    else -> {}
+                }
             }
         }
-    }
-
-    private fun getMeaning(title: String) {
-        val compositeDisposable = CompositeDisposable()
-        val disposable = Observable.create(ObservableOnSubscribe<WordMeaning> { emitter ->
-
-            try {
-                val apiService = RetrofitClient.getApiService()
-                val response = apiService.getMeaning(title)
-                val wordMeaning = response as List<WordMeaning>
-                emitter.onNext(wordMeaning[0])
-            } catch (e: Exception) {
-                emitter.onError(e.fillInStackTrace())
-            }
-        })
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ dictionary ->
-                val defination = dictionary.meanings[0].definitions[0].definition
-                val partOfSpeech = dictionary.meanings[0].partOfSpeech
-                val audio = dictionary.phonetics[0].audio
-            }, {
-                setLog(it.localizedMessage)
-            })
-
-        compositeDisposable.add(disposable)
     }
 
 
@@ -175,16 +160,26 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
         super.onDestroy()
     }
 
-    override fun optionPicked(option: String, position: Int) {
-        if (option.equals("SUMMARY")) {
-            books?.let {
-                val book = books!!.get(position)
-                val intent = Intent(this, BookDetail::class.java)
-                intent.putExtra("book_data", book.toJsonString())
-                startActivity(intent)
+    override fun optionPicked(option: Option, position: Int) {
+        books?.let {
+            val book = books!!.get(position)
+            val intent: Intent
+            when (option) {
+                Option.SUMMARY -> {
+                    intent = Intent(this, BookDetail::class.java)
+                    intent.putExtra("book_data", book.toJsonString())
+                }
+                Option.DETAIL -> {
+                    intent = Intent(this, AddActivity::class.java)
+                    intent.putExtra("book_data", book.toJsonString())
+                }
             }
+
+            startActivity(intent)
         }
+
     }
 }
+
 
 

@@ -1,9 +1,8 @@
-package com.example.repo
+package com.example.booksam.repo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.common.Genre
 
 @Entity(tableName = "book_table")
 data class Book(

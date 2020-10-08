@@ -1,15 +1,12 @@
 package com.example.booksam.main
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.base.BaseAndroidViewModel
-import com.example.common.Genre
-import com.example.repo.Book
-import com.example.repo.BookDataBase.Companion.getInstance
-import com.example.repo.BookRepository
+import com.example.booksam.repo.Book
+import com.example.booksam.repo.BookDataBase.Companion.getInstance
+import com.example.booksam.repo.BookRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
@@ -31,5 +28,9 @@ class MainViewModel(context: Application) : BaseAndroidViewModel(context) {
         repository.update(book)
     }
 
+    fun delete(book: Book) = viewModelScope.launch(IO) {
+        repository.delete(book)
+//        books.postValue(repository.books.value)
+    }
 
 }

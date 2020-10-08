@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.booksam.R
-import com.example.repo.database.Word
+import com.example.booksam.repo.database.Word
 import kotlinx.android.synthetic.main.item_word_view.view.*
 
 class WordAdapter(val words: List<Word>) : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {

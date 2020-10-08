@@ -1,8 +1,7 @@
-package com.example.repo
+package com.example.booksam.repo
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.common.Genre
 
 @Dao
 interface BookDao {
@@ -14,6 +13,9 @@ interface BookDao {
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun update(book: Book)
+
+    @Delete
+    suspend fun delete(book: Book)
 
     @Query("DELETE FROM book_table")
     fun deleteAll()

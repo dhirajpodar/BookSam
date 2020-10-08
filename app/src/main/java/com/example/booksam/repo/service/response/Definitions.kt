@@ -9,9 +9,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
-package com.example.repo.service.response
-data class Meanings (
+package com.example.booksam.repo.service.response
 
-	val partOfSpeech : String,
-	val definitions : List<Definitions>
+data class Definitions(
+
+    val definition: String,
+    val example: String,
+    val synonyms: List<String>
 )

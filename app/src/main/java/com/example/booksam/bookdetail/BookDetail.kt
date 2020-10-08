@@ -1,18 +1,14 @@
 package com.example.booksam.bookdetail
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
-import androidx.core.view.get
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.R
 import com.example.booksam.databinding.ActivityBookDetailBinding
 import com.example.extension.toObj
-import com.example.repo.Book
+import com.example.booksam.repo.Book
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_book_detail.*
 

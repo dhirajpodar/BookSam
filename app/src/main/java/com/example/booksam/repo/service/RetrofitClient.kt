@@ -1,6 +1,6 @@
 package com.example.android.service
 
-import com.example.repo.service.ApiService
+import com.example.booksam.repo.service.ApiService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

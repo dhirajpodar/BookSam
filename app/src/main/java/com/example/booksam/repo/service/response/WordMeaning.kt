@@ -1,4 +1,4 @@
-package com.example.repo.service.response
+package com.example.booksam.repo.service.response
 
 data class WordMeaning(
 

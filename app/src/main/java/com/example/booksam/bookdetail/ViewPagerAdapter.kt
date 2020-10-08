@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.booksam.R
-import com.example.repo.Book
-import com.example.repo.database.Word
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.example.booksam.repo.Book
+import com.example.booksam.repo.database.Word
 import kotlinx.android.synthetic.main.tab_word.view.*
 
 class ViewPagerAdapter(val book: Book) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

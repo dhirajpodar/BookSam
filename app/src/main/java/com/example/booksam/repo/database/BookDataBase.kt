@@ -1,11 +1,11 @@
-package com.example.repo
+package com.example.booksam.repo
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.common.Genre
+import com.example.booksam.common.Genre
 import com.example.extension.setLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

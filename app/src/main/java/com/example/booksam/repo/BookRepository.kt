@@ -1,8 +1,7 @@
-package com.example.repo
+package com.example.booksam.repo
 
 
 import androidx.lifecycle.LiveData
-import com.example.common.Genre
 
 class BookRepository(private val bookDao: BookDao) {
 
@@ -16,4 +15,7 @@ class BookRepository(private val bookDao: BookDao) {
         bookDao.update(book)
     }
 
+    suspend fun delete(book: Book) {
+        bookDao.delete(book)
+    }
 }

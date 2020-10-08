@@ -13,35 +13,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dhiraj.base.BaseActivity
-import com.example.Utils
-import com.example.android.service.RetrofitClient
+import com.example.booksam.Utils
 import com.example.booksam.BR
-import com.example.repo.Book
+import com.example.booksam.repo.Book
 import com.example.booksam.R
 import com.example.booksam.add.AddActivity
 import com.example.booksam.bookdetail.BookDetail
 import com.example.booksam.databinding.ActivityMainBinding
-import com.example.common.Crud
-import com.example.common.Genre
-import com.example.common.Option
+import com.example.booksam.common.Crud
+import com.example.booksam.common.Genre
+import com.example.booksam.common.Option
 import com.example.extension.setLog
 import com.example.extension.toJsonString
 import com.example.extension.toObj
-import com.example.repo.service.response.WordMeaning
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionSelectedListener {
     private val REQUEST_CODE = 100
     private lateinit var mainViewModel: MainViewModel
     private var bookAdapterSpiritual: BookAdapter? = null
     private var bookAdapterBusiness: BookAdapter? = null
-    private var books: List<Book>? = null
+    private var booksBySpiritual: List<Book>? = null
+    private var booksByBuisness: List<Book>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,9 +84,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
     private fun initObservers() {
         mainViewModel.books.observe(this, Observer { books ->
             books?.let {
-                this.books = it
-                bookAdapterSpiritual?.setBooks(it.filter { g -> g.genre == Genre.SPIRITUAL.genre })
-                bookAdapterBusiness?.setBooks(it.filter { g -> g.genre == Genre.BUSINESS.genre })
+                this.booksBySpiritual = it.filter { g -> g.genre == Genre.SPIRITUAL.genre }
+                this.booksByBuisness = it.filter { g -> g.genre == Genre.BUSINESS.genre }
+                bookAdapterSpiritual?.setBooks(booksBySpiritual!!)
+                bookAdapterBusiness?.setBooks(booksByBuisness!!)
             }
         })
 
@@ -138,6 +132,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
                 when (operation) {
                     Crud.ADD.name -> mainViewModel.insert(book)
                     Crud.UPDATE.name -> mainViewModel.update(book)
+                    Crud.DELETE.name -> mainViewModel.delete(book)
                     else -> {}
                 }
             }
@@ -160,24 +155,36 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
         super.onDestroy()
     }
 
-    override fun optionPicked(option: Option, position: Int) {
-        books?.let {
-            val book = books!!.get(position)
-            val intent: Intent
-            when (option) {
-                Option.SUMMARY -> {
-                    intent = Intent(this, BookDetail::class.java)
-                    intent.putExtra("book_data", book.toJsonString())
-                }
-                Option.DETAIL -> {
-                    intent = Intent(this, AddActivity::class.java)
-                    intent.putExtra("book_data", book.toJsonString())
-                }
+    override fun optionPicked(option: Option, position: Int, genre: String) {
+        if (genre == Genre.SPIRITUAL.genre) {
+            booksBySpiritual?.let {
+                startActivity(it[position], option)
             }
-
-            startActivity(intent)
         }
 
+        if (genre == Genre.BUSINESS.genre) {
+            booksByBuisness?.let {
+                startActivity(it[position], option)
+            }
+        }
+
+
+    }
+
+    private fun startActivity(book: Book, option: Option) {
+        setLog("MainActivty:::${book.toJsonString()}")
+        val intent: Intent
+        when (option) {
+            Option.SUMMARY -> {
+                intent = Intent(this, BookDetail::class.java)
+                intent.putExtra("book_data", book.toJsonString())
+            }
+            Option.DETAIL -> {
+                intent = Intent(this, AddActivity::class.java)
+                intent.putExtra("book_data", book.toJsonString())
+            }
+        }
+        startActivity(intent)
     }
 }
 

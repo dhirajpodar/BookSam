@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.booksam.R
-import com.example.common.Genre
+import com.example.booksam.common.Genre
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.item_bottom_sheet.view.*
 

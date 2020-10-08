@@ -1,4 +1,4 @@
-package com.example
+package com.example.booksam
 
 import android.view.View
 

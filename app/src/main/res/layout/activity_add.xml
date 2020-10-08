@@ -21,31 +21,50 @@
             android:layout_height="wrap_content"
             android:elevation="4dp">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:visibility="visible">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Book"
-                        android:textSize="20sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Detail"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Book"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detail"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingRight="8dp"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+
         </androidx.cardview.widget.CardView>
 
 
@@ -56,47 +75,47 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_et_book_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Book Name"
-                android:textStyle="bold" />
+                android:hint="Book name">
 
-            <EditText
-                android:id="@+id/et_book_name"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_book_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_et_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="enter book name" />
+                android:hint="Author Name">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Author Name"
-                android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/et_author"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_et_genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="enter Author" />
+                android:hint="Genre">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Genre"
-                android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_genre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false" />
 
-            <EditText
-                android:id="@+id/et_genre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:focusable="false"
-                android:hint="Select Genre" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <Switch

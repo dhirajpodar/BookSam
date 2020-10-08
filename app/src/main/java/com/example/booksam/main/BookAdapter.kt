@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.repo.Book
+import com.example.booksam.repo.Book
 import com.example.booksam.R
-import com.example.common.Option
+import com.example.booksam.common.Option
 import kotlinx.android.synthetic.main.custom_book_view.view.*
 
 class BookAdapter(private val optionSelectedListener: OptionSelectedListener) :
@@ -43,10 +43,17 @@ class BookAdapter(private val optionSelectedListener: OptionSelectedListener) :
         }
 
         holder.itemView.tv_summary.setOnClickListener {
-            optionSelectedListener.optionPicked(Option.SUMMARY, holder.adapterPosition)
+            optionSelectedListener.optionPicked(
+                Option.SUMMARY,
+                holder.adapterPosition,
+                books[holder.adapterPosition].genre
+            )
         }
         holder.itemView.tv_detail.setOnClickListener {
-            optionSelectedListener.optionPicked(Option.DETAIL, holder.adapterPosition)
+            optionSelectedListener.optionPicked(
+                Option.DETAIL, holder.adapterPosition,
+                books[holder.adapterPosition].genre
+            )
         }
 
     }

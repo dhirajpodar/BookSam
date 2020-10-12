@@ -1,6 +1,5 @@
 package com.example.booksam.add
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -9,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.repo.Book
@@ -16,11 +16,10 @@ import com.example.booksam.R
 import com.example.booksam.add.bottomSheet.BottomSheetOptionPickedListener
 import com.example.booksam.add.bottomSheet.SelectBottomSheetFragment
 import com.example.booksam.databinding.ActivityAddBinding
-import com.example.booksam.common.Crud
+import com.example.booksam.common.Field
 import com.example.booksam.common.Genre
+import com.example.booksam.main.MainActivity
 import com.example.extension.setLog
-import com.example.extension.toJsonString
-import com.example.extension.toObj
 import kotlinx.android.synthetic.main.activity_add.*
 
 class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
@@ -38,18 +37,31 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
         }
         initIntent()
         initView()
+        initObserver()
+    }
+
+    private fun initObserver() {
+        getViewModel().inserted.observe(this, Observer {
+            if (it) {
+                startActivity(Intent(this@AddActivity, MainActivity::class.java))
+                finish()
+            }
+        })
 
     }
+
 
     private fun initIntent() {
         iv_delete.visibility = View.GONE
         val data = intent.getStringExtra("book_data")
-        data?.let {
+        getViewModel().checkIntentData(data)
+        getViewModel().book?.let {
+            this.book = it
             iv_delete.visibility = View.VISIBLE
-            book = it.toObj(Book::class.java)
             setLog("AddActivity:::$book")
-            setBookInFields(book!!)
+            setBookInFields(it)
         }
+
     }
 
     private fun setBookInFields(book: Book) {
@@ -79,66 +91,70 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
         }
 
         btn_add.setOnClickListener {
-            validate()
+            val name = et_book_name.text()
+            val author = et_author.text()
+            val genre = et_genre.text()
+            val favourite = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                switch_fav.showText
+            } else {
+                false
+            }
+            val rating = rating_bar.rating
+            getViewModel().vaidateFields(name, author, genre, favourite, rating)
+
+            getViewModel().erroMessage.observe(this, Observer { errorMessage ->
+                if (errorMessage.hasError) {
+                    showError(errorMessage.field!!, errorMessage.message!!)
+                } else {
+                    setNullToError()
+                }
+            })
         }
 
         iv_delete.setOnClickListener {
-            val alertDialog = AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to delete this?")
-                .setPositiveButton(
-                    "Yes"
-                ) { dialog, i ->
-                    returnToMain(this.book, Crud.DELETE.name)
-                    dialog?.dismiss()
-                }
-                .setNegativeButton("No", object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface?, i: Int) {
-                        dialog?.dismiss()
-                    }
-                })
-                .setCancelable(false)
-                .create()
-
-            alertDialog.show()
+            showAlertDialog()
         }
     }
 
-    private fun validate() {
+    private fun setNullToError() {
+        et_book_name.setError(null)
+        et_author.setError(null)
+        et_genre.setError(null)
+    }
 
-        val name = et_book_name.text.toString()
-        val author = et_author.text.toString()
-        val genre = et_genre.text.toString()
-        val favourite = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            switch_fav.showText
-        } else {
-            false
-        }
-        val rating = rating_bar.rating
-        val book = Book(name, author, genre, rating, favourite)
-        if (this.book == null) {
-            returnToMain(book, Crud.ADD.name)
-        } else {
-            if (this.book == book) {
-                returnToMain(book, Crud.NOCHANGE.name)
-            } else {
-                returnToMain(book, Crud.UPDATE.name)
+    private fun showError(field: Field, message: String) {
+        when (field) {
+            Field.TITLE -> et_book_name.setError(message)
+            Field.AUTHOR -> et_author.setError(message)
+            Field.GENRE -> et_genre.setError(message)
+//            Field.RATING -> rating_bar.error = message
+            else -> {
             }
         }
-
-
     }
 
-    fun returnToMain(book: Book?, crud: String) {
-        val replyIntent = Intent()
-        book?.let {
-            replyIntent.putExtra(CODE, book.toJsonString())
-        }
-        setLog("AddActivity::::$crud")
-        replyIntent.putExtra("crud", crud)
+    private fun showAlertDialog() {
+        val alertDialog = AlertDialog.Builder(this)
+            .setMessage("Are you sure you want to delete this?")
+            .setPositiveButton(
+                "Yes"
+            ) { dialog, i ->
+                getViewModel().delete(book!!)
+                showToast("${book?.title} is deleted.")
+                openActivity(MainActivity::class.java)
+                dialog?.dismiss()
+            }
+            .setNegativeButton("No", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, i: Int) {
+                    dialog?.dismiss()
+                }
+            })
+            .setCancelable(false)
+            .create()
 
-        setResult(Activity.RESULT_OK, replyIntent)
-        finish()
+        alertDialog.show()
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

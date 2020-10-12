@@ -42,7 +42,7 @@
                             android:layout_height="wrap_content"
                             android:paddingStart="16dp"
                             android:paddingLeft="16dp"
-                            android:text="Books"
+                            android:text="Verity"
                             android:textSize="30sp"
                             android:textStyle="bold" />
 

@@ -1,40 +1,29 @@
 package com.example.booksam.main
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.WindowManager
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.Utils
 import com.example.booksam.BR
-import com.example.booksam.repo.Book
 import com.example.booksam.R
 import com.example.booksam.add.AddActivity
-import com.example.booksam.bookdetail.BookDetail
 import com.example.booksam.databinding.ActivityMainBinding
-import com.example.booksam.common.Crud
-import com.example.booksam.common.Genre
-import com.example.booksam.common.Option
-import com.example.extension.setLog
-import com.example.extension.toJsonString
-import com.example.extension.toObj
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionSelectedListener {
-    private val REQUEST_CODE = 100
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), LifecycleObserver {
     private lateinit var mainViewModel: MainViewModel
     private var bookAdapterSpiritual: BookAdapter? = null
     private var bookAdapterBusiness: BookAdapter? = null
-    private var booksBySpiritual: List<Book>? = null
-    private var booksByBuisness: List<Book>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +40,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
         initViewPager()
         initRecyclerView()
         initObservers()
-        initFB()
+        initView()
+
     }
 
     private fun initViewPager() {
@@ -64,6 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
 
 
     private fun initTimer() {
+
         object : CountDownTimer(10000, 1000) {
             override fun onFinish() {
                 val position = viewPager_image.currentItem
@@ -82,16 +73,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
 
 
     private fun initObservers() {
-        mainViewModel.books.observe(this, Observer { books ->
-            books?.let {
-                this.booksBySpiritual = it.filter { g -> g.genre == Genre.SPIRITUAL.genre }
-                this.booksByBuisness = it.filter { g -> g.genre == Genre.BUSINESS.genre }
-                bookAdapterSpiritual?.setBooks(booksBySpiritual!!)
-                bookAdapterBusiness?.setBooks(booksByBuisness!!)
-            }
+        mainViewModel.books.observe(this, Observer {
+            mainViewModel.setBooksByGenre()
         })
 
-
+        mainViewModel.booksBySpiritual.observe(this, Observer { books ->
+            books?.let {
+                bookAdapterSpiritual?.setBooks(it)
+            }
+        })
+        mainViewModel.booksByBusiness.observe(this, Observer { books ->
+            books?.let {
+                bookAdapterBusiness?.setBooks(it)
+            }
+        })
     }
 
 
@@ -101,42 +96,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
     }
 
     private fun initRecyclerView() {
-        bookAdapterSpiritual = BookAdapter(this)
+        bookAdapterSpiritual = BookAdapter()
         rv_genre_spiritual.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_genre_spiritual.adapter = bookAdapterSpiritual
 
-        bookAdapterBusiness = BookAdapter(this)
+        bookAdapterBusiness = BookAdapter()
         rv_genre_business.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_genre_business.adapter = bookAdapterBusiness
     }
 
 
-    private fun initFB() {
+    private fun initView() {
         fb_add.setOnClickListener {
-            val intent = Intent(this, AddActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE)
+            openActivity(AddActivity::class.java)
         }
 
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.let {
-                val dataInString = it.getStringExtra("SUCCESS")
-                val operation = it.getStringExtra("crud")
-                val book = dataInString?.toObj(Book::class.java)!!
-                when (operation) {
-                    Crud.ADD.name -> mainViewModel.insert(book)
-                    Crud.UPDATE.name -> mainViewModel.update(book)
-                    Crud.DELETE.name -> mainViewModel.delete(book)
-                    else -> {}
-                }
-            }
-        }
     }
 
 
@@ -151,41 +127,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), OptionS
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun onDestroy() {
-        mainViewModel.onClear()
         super.onDestroy()
+//        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
-    override fun optionPicked(option: Option, position: Int, genre: String) {
-        if (genre == Genre.SPIRITUAL.genre) {
-            booksBySpiritual?.let {
-                startActivity(it[position], option)
-            }
-        }
 
-        if (genre == Genre.BUSINESS.genre) {
-            booksByBuisness?.let {
-                startActivity(it[position], option)
-            }
-        }
-
-
-    }
-
-    private fun startActivity(book: Book, option: Option) {
-        setLog("MainActivty:::${book.toJsonString()}")
-        val intent: Intent
-        when (option) {
-            Option.SUMMARY -> {
-                intent = Intent(this, BookDetail::class.java)
-                intent.putExtra("book_data", book.toJsonString())
-            }
-            Option.DETAIL -> {
-                intent = Intent(this, AddActivity::class.java)
-                intent.putExtra("book_data", book.toJsonString())
-            }
-        }
-        startActivity(intent)
-    }
 }
 
 

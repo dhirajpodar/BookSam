@@ -43,8 +43,6 @@ o
 ?app/src/main/java/com/example/booksam/bookdetail/WordAdapter.kt,6/7/67967d3ffb5ea411979f63f0a925762766b809b5
 t
 Dapp/src/main/java/com/example/booksam/bookdetail/ViewPagerAdapter.kt,7/f/7ffde9c69fb7329e69385b0345d34f9208241243
-n
->app/src/main/java/com/example/booksam/bookdetail/BookDetail.kt,8/1/81a57033cf1ce20e923c49237faa1dd3224b12c7
 l
 <app/src/main/java/com/example/booksam/main/VpImageAdapter.kt,b/d/bd7c06e00a5885f2011bd309fe154b7706a3590f
 ˆ
@@ -63,3 +61,11 @@ n
 >app/src/main/java/com/example/booksam/repo/database/BookDao.kt,c/1/c1e37070f0df061e84c9f24a27393aec8a182f88
 l
 <app/src/main/java/com/example/booksam/repo/BookRepository.kt,0/0/009a745900d310173c253624e8d64e1e0d67f912
+g
+7app/src/main/java/com/example/booksam/PhraseFragment.kt,b/d/bdd1aa1e6b8bea40cd346b75c8e2bbbdd0d6f1ce
+e
+5app/src/main/java/com/example/booksam/WordFragment.kt,8/8/8833a8408e1ec2996709bfe06185d2ae1121a018
+h
+8app/src/main/java/com/example/booksam/SummaryFragment.kt,3/5/3552b1f4424fb61bf09c66b8b161318242a27a0d
+v
+Fapp/src/main/java/com/example/booksam/bookdetail/BookDetailActivity.kt,9/6/96786488f50d434219c9d3bbf3278390a114b607

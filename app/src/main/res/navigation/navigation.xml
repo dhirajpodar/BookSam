@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/addFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.booksam.SummaryFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_summary" >
+        <action
+            android:id="@+id/action_addFragment_to_wordFragment"
+            app:destination="@id/wordFragment" />
+        <action
+            android:id="@+id/action_addFragment_to_phraseFragment"
+            app:destination="@id/phraseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wordFragment"
+        android:name="com.example.booksam.WordFragment"
+        android:label="fragment_word"
+        tools:layout="@layout/fragment_word" >
+        <action
+            android:id="@+id/action_wordFragment_to_phraseFragment"
+            app:destination="@id/phraseFragment" />
+        <action
+            android:id="@+id/action_wordFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phraseFragment"
+        android:name="com.example.booksam.PhraseFragment"
+        android:label="fragment_phrase"
+        tools:layout="@layout/fragment_phrase" >
+        <action
+            android:id="@+id/action_phraseFragment_to_wordFragment"
+            app:destination="@id/wordFragment" />
+        <action
+            android:id="@+id/action_phraseFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
+</navigation>

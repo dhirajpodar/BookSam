@@ -3,16 +3,18 @@ package com.example.booksam.bookdetail
 import android.content.Context
 import android.os.Bundle
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.R
+import com.example.booksam.SummaryFragment
 import com.example.booksam.databinding.ActivityBookDetailBinding
 import com.example.extension.toObj
 import com.example.booksam.repo.Book
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_book_detail.*
 
-class BookDetail : BaseActivity<ActivityBookDetailBinding, BookDetailViewModel>() {
+class BookDetailActivity : BaseActivity<ActivityBookDetailBinding, BookDetailViewModel>() {
 
     private lateinit var bookDetailViewModel: BookDetailViewModel
     private var book: Book? = null
@@ -21,10 +23,20 @@ class BookDetail : BaseActivity<ActivityBookDetailBinding, BookDetailViewModel>(
         supportActionBar?.hide()
         initIntent()
         setViewModel()
-        initViewPager()
+//        initFragment()
+//        initViewPager()
 
     }
 
+  /*  private fun initFragment() {
+        val fragmentManager = supportFragmentManager
+        val summaryFragment = SummaryFragment(this)
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.rl_container, summaryFragment, "summary_fragment")
+        fragmentTransaction.commit()
+
+    }
+*/
     private fun initIntent() {
         val bookInString = intent.getStringExtra("book_data")
         bookInString?.let {

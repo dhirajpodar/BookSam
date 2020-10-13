@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,67 +10,132 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:background="@color/colorMainBg">
+        android:layout_height="match_parent">
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/main_bg" />
 
-            <LinearLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingLeft="16dp"
+                    android:orientation="vertical"
                     android:paddingTop="16dp">
 
-                    <TextView
-                        android:id="@+id/section1_heading1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="What are you reading"
-                        android:textSize="30sp" />
-
-                    <TextView
-                        android:id="@+id/section1_heading2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/section1_heading1"
-                        android:text="today?"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_itemView"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/section1_heading2"
-                        android:paddingTop="16dp" />
-                </RelativeLayout>
+                        android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="16dp"
+                            android:paddingLeft="16dp"
+                            android:text="Verity"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
 
-                </RelativeLayout>
-            </LinearLayout>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardUseCompatPadding="true">
 
-        </ScrollView>
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/viewPager_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:padding="8dp" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <me.relex.circleindicator.CircleIndicator3
+                            android:id="@+id/indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp">
+
+                        <TextView
+                            android:id="@+id/section1_heading1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="What are you reading"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/section1_heading2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/section1_heading1"
+                            android:text="today?"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_genre_spiritual"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/section1_heading2"
+                            android:paddingTop="16dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp">
+
+                        <TextView
+                            android:id="@+id/section2_heading1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Non-Fictional and Business"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_genre_business"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/section2_heading1"
+                            android:paddingTop="16dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </ScrollView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fb_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_add_black_24dp" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 

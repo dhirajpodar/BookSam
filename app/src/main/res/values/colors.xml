@@ -6,4 +6,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorMainBg">#F5F5F5</color>
     <color name="colorChecked">#9B7DDF</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#C3C3C3</color>
+    <color name="colorRed">#CA0E0E</color>
+    <color name="colorBlack">#000000</color>
 </resources>

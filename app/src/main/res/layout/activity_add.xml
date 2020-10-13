@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,73 +14,119 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Book"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Detail"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingRight="8dp"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/cv_toolbar"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Book Name"
-                android:textStyle="bold" />
-
-            <EditText
+            <com.example.booksam.utils.CustomEditText
                 android:id="@+id/et_book_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="enter book name" />
+                android:padding="4dp"
+                app:hint="@string/book_name"
+                app:label="Book Title"
+                app:mandatory="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Author Name"
-                android:textStyle="bold" />
 
-            <EditText
+            <com.example.booksam.utils.CustomEditText
                 android:id="@+id/et_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="enter Author" />
+                android:padding="4dp"
+                app:hint="@string/author_name"
+                app:label="Author"
+                app:mandatory="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Genre"
-                android:textStyle="bold" />
-
-            <EditText
+            <com.example.booksam.utils.CustomEditText
                 android:id="@+id/et_genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Select Genre" />
+                android:padding="4dp"
+                app:allCaps="true"
+                app:clickable="true"
+                app:focusable="false"
+                app:hint="@string/genre"
+                app:label="Genre"
+                app:mandatory="true" />
 
 
-            <Switch
-                android:id="@+id/switch_fav"
+            <com.example.booksam.utils.CustomEditText
+                android:id="@+id/et_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Favourite" />
+                android:padding="4dp"
+                app:allCaps="true"
+                app:clickable="true"
+                app:focusable="false"
+                app:label="Rating" />
 
-
-            <TextView
+            <CheckBox
+                android:id="@+id/checkbox_liked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Rating"
-                android:textStyle="bold" />
+                android:text="Add to favourite" />
 
-            <RatingBar
-                android:id="@+id/rating_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -89,6 +136,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
-            android:text="add" />
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="add"
+            android:textColor="@color/colorWhite" />
+
+
     </RelativeLayout>
 </layout>

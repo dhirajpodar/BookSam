@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:drawableTint="http://schemas.android.com/aapt">
-    <item
-        android:drawable="@drawable/outline_favorite_border_black_18dp"
-        android:drawableTint="@color/splashColorPrimaryDark"
-        android:state_pressed="true"/>
-    <item android:drawable="@drawable/outline_favorite_border_black_18dp" android:state_pressed="false" />
-
-</selector>

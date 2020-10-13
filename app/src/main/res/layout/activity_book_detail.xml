@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.booksam.bookdetail.BookDetailViewModel" />
+            type="com.example.booksam.bookdetail.SummaryViewModel" />
 
     </data>
 

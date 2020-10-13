@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
@@ -19,11 +20,16 @@ import com.example.booksam.databinding.ActivityAddBinding
 import com.example.booksam.common.Field
 import com.example.booksam.common.Genre
 import com.example.booksam.main.MainActivity
+import com.example.booksam.utils.CustomEditText
 import com.example.extension.setLog
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.android.synthetic.main.custom_book_view.*
+import kotlinx.android.synthetic.main.custom_rating_dialog.view.*
+import java.util.*
 
 class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
 
+    private var rating: Float = 0.0F
     private val CODE = "SUCCESS"
     private var book: Book? = null
     private lateinit var bottomSheetDialogFragment: SelectBottomSheetFragment
@@ -68,10 +74,7 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
         et_book_name.setText(book.title)
         et_author.setText(book.author)
         et_genre.setText(book.genre)
-        rating_bar.rating = book.rating
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            switch_fav.showText = book.favourite
-        }
+        checkbox_liked.isChecked = book.favourite
 
     }
 
@@ -80,27 +83,43 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>() {
         bottomSheetDialogFragment =
             SelectBottomSheetFragment(object : BottomSheetOptionPickedListener {
                 override fun optionPicked(genre: Genre) {
-                    et_genre.setText(genre.genre)
+                    et_genre.setText(genre.genre.toUpperCase(Locale.ENGLISH))
                     bottomSheetDialogFragment.dismiss()
                 }
             })
 
 
-        et_genre.setOnClickListener {
+        et_genre.getEditText().setOnClickListener {
             bottomSheetDialogFragment.show(supportFragmentManager, "bottom_sheet")
+        }
+
+        et_rating.getEditText().setOnClickListener {
+            val ratingDialog = AlertDialog.Builder(this)
+            val view = layoutInflater.inflate(R.layout.custom_rating_dialog, null)
+            view.rating_bar.rating = this.rating
+            ratingDialog.apply {
+                setView(view)
+                setCancelable(false)
+                setPositiveButton("Okay", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, p1: Int) {
+                        rating = view.rating_bar.rating
+                        et_rating.setText(rating.toString())
+                        dialog?.dismiss()
+                    }
+                })
+                create()
+                show()
+            }
+
+
         }
 
         btn_add.setOnClickListener {
             val name = et_book_name.text()
             val author = et_author.text()
             val genre = et_genre.text()
-            val favourite = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                switch_fav.showText
-            } else {
-                false
-            }
-            val rating = rating_bar.rating
-            getViewModel().vaidateFields(name, author, genre, favourite, rating)
+            val liked = checkbox_liked.isChecked
+            getViewModel().vaidateFields(name, author, genre, liked, rating)
 
             getViewModel().erroMessage.observe(this, Observer { errorMessage ->
                 if (errorMessage.hasError) {

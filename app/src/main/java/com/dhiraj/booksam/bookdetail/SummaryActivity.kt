@@ -3,20 +3,18 @@ package com.example.booksam.bookdetail
 import android.content.Context
 import android.os.Bundle
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.R
-import com.example.booksam.SummaryFragment
 import com.example.booksam.databinding.ActivityBookDetailBinding
 import com.example.extension.toObj
 import com.example.booksam.repo.Book
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_book_detail.*
 
-class BookDetailActivity : BaseActivity<ActivityBookDetailBinding, BookDetailViewModel>() {
+class SummaryActivity : BaseActivity<ActivityBookDetailBinding, SummaryViewModel>() {
 
-    private lateinit var bookDetailViewModel: BookDetailViewModel
+    private lateinit var bookDetailViewModel: SummaryViewModel
     private var book: Book? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +26,15 @@ class BookDetailActivity : BaseActivity<ActivityBookDetailBinding, BookDetailVie
 
     }
 
-  /*  private fun initFragment() {
-        val fragmentManager = supportFragmentManager
-        val summaryFragment = SummaryFragment(this)
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.rl_container, summaryFragment, "summary_fragment")
-        fragmentTransaction.commit()
+    /*  private fun initFragment() {
+          val fragmentManager = supportFragmentManager
+          val summaryFragment = SummaryFragment(this)
+          val fragmentTransaction = fragmentManager.beginTransaction()
+          fragmentTransaction.add(R.id.rl_container, summaryFragment, "summary_fragment")
+          fragmentTransaction.commit()
 
-    }
-*/
+      }
+  */
     private fun initIntent() {
         val bookInString = intent.getStringExtra("book_data")
         bookInString?.let {
@@ -76,8 +74,8 @@ class BookDetailActivity : BaseActivity<ActivityBookDetailBinding, BookDetailVie
 
     override fun getContext(): Context = this
 
-    override fun getViewModel(): BookDetailViewModel =
-        ViewModelProvider(this).get(BookDetailViewModel::class.java)
+    override fun getViewModel(): SummaryViewModel =
+        ViewModelProvider(this).get(SummaryViewModel::class.java)
 
     override fun getBindingVariable(): Int = BR.viewModel
 }

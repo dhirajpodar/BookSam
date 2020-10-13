@@ -80,22 +80,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                app:label="Book"
-                app:mandatory="true"
-                app:text="book name" />
+                app:hint="@string/book_name"
+                app:label="Book Title"
+                app:mandatory="true" />
 
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_et_book_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Book name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_book_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.example.booksam.utils.CustomEditText
                 android:id="@+id/et_author"
@@ -103,9 +91,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:padding="4dp"
+                app:hint="@string/author_name"
                 app:label="Author"
-                app:mandatory="true"
-                app:text="Author name" />
+                app:mandatory="true" />
 
             <com.example.booksam.utils.CustomEditText
                 android:id="@+id/et_genre"
@@ -113,61 +101,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:padding="4dp"
+                app:allCaps="true"
+                app:clickable="true"
+                app:focusable="false"
+                app:hint="@string/genre"
                 app:label="Genre"
-                app:mandatory="true"
-                app:text="Genre"
-                app:focusable="false"/>
+                app:mandatory="true" />
 
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_et_author"
+
+            <com.example.booksam.utils.CustomEditText
+                android:id="@+id/et_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Author Name">
+                android:padding="4dp"
+                app:allCaps="true"
+                app:clickable="true"
+                app:focusable="false"
+                app:label="Rating" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
--->
-
-           <!-- <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_et_genre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="Genre">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_genre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false" />
-
-            </com.google.android.material.textfield.TextInputLayout>-->
-
-
-            <Switch
-                android:id="@+id/switch_fav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Favourite" />
-
-
-            <TextView
+            <CheckBox
+                android:id="@+id/checkbox_liked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Rating"
-                android:textStyle="bold" />
+                android:text="Add to favourite" />
 
-            <RatingBar
-                android:id="@+id/rating_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -177,8 +136,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:text="add"
             android:textColor="@color/colorWhite" />
+
+
     </RelativeLayout>
 </layout>

@@ -51,7 +51,7 @@ class AddViewModel(context: Application) : BaseAndroidViewModel(context) {
     private fun performInsertion(book: Book) {
         if (this.book == null) {
             insert(book)
-        } else if (book == this.book) {
+        } else if (book != this.book) {
             update(book)
         }
         inserted.value = true

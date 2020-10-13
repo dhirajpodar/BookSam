@@ -91,5 +91,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
 
     //Coil
-    implementation 'io.coil-kt:coil:1.0.0-rc3'
+//    implementation 'io.coil-kt:coil:1.0.0-rc3'
 }

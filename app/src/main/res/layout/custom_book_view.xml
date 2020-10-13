@@ -37,12 +37,13 @@
 
 
                 <ImageView
+                    android:id="@+id/iv_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:paddingStart="8dp"
                     android:paddingLeft="8dp"
-                    android:src="@mipmap/outline_favorite_border_black_18dp" />
+                    android:src="@drawable/ic_favorite_border_black_24dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"

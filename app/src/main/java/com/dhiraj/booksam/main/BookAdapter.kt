@@ -2,16 +2,15 @@ package com.example.booksam.main
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.booksam.repo.Book
 import com.example.booksam.R
 import com.example.booksam.add.AddActivity
-import com.example.booksam.bookdetail.BookDetailActivity
+import com.example.booksam.bookdetail.SummaryActivity
 import com.example.extension.toJsonString
 import kotlinx.android.synthetic.main.custom_book_view.view.*
 
@@ -40,11 +39,29 @@ class BookAdapter :
         holder.itemView.tv_title.text = books.get(position).title
         holder.itemView.tv_author.text = books.get(position).author
         holder.itemView.tv_rating.text = books.get(position).rating.toString()
-        if (books.get(position).author.equals("Gaur Gopal Das")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                holder.itemView.iv_book_cover.load(R.drawable.las)
-            }
+
+        if (books.get(position).favourite) {
+            holder.itemView.iv_like.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_favorite_red_24dp,
+                    null
+                )
+            )
+        } else {
+            holder.itemView.iv_like.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ic_favorite_border_black_24dp,
+                    null
+                )
+            )
         }
+        /* if (books.get(position).author.equals("Gaur Gopal Das")) {
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                 holder.itemView.iv_book_cover.load(R.drawable.las)
+             }
+         }*/
 
 
     }
@@ -66,7 +83,7 @@ class BookAdapter :
         }
 
         private fun openSummaryActivity(book: Book) {
-            val intent = Intent(context, BookDetailActivity::class.java)
+            val intent = Intent(context, SummaryActivity::class.java)
             intent.putExtra("book_data", book.toJsonString())
             context.startActivity(intent)
         }

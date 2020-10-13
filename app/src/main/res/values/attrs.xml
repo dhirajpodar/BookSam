@@ -3,9 +3,12 @@
     <declare-styleable name="CustomEditText">
         <attr name="maxLines" format="integer" />
         <attr name="label" format="string" />
+        <attr name="hint" format="string" />
         <attr name="text" format="string" />
         <attr name="mandatory" format="boolean" />
+        <attr name="allCaps" format="boolean" />
         <attr name="focusable" format="boolean" />
+        <attr name="clickable" format="boolean" />
         <attr name="maxLength" format="integer" />
 
         <attr name="inputType">

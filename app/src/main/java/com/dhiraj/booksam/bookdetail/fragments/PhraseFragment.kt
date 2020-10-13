@@ -24,9 +24,6 @@ class PhraseFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_phraseFragment_to_wordFragment)
         }
 
-        view.tv_back.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_phraseFragment_to_addFragment)
-        }
         return view
     }
 

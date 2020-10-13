@@ -95,7 +95,7 @@ class CustomEditText : LinearLayout {
 
     }
 
-    fun text(): String? {
+    fun text(): String {
         return et_input_text.text.toString()
     }
 

@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bookdetail.SummaryActivity"></activity>
+        <activity
+            android:name=".bookdetail.SummaryActivity"
+            android:theme="@style/AppThemeNoActionBar"></activity>
         <activity
             android:name=".add.AddActivity"
             android:theme="@style/AppThemeNoActionBar" />

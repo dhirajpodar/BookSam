@@ -26,9 +26,6 @@
         <action
             android:id="@+id/action_wordFragment_to_phraseFragment"
             app:destination="@id/phraseFragment" />
-        <action
-            android:id="@+id/action_wordFragment_to_addFragment"
-            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/phraseFragment"
@@ -38,8 +35,5 @@
         <action
             android:id="@+id/action_phraseFragment_to_wordFragment"
             app:destination="@id/wordFragment" />
-        <action
-            android:id="@+id/action_phraseFragment_to_addFragment"
-            app:destination="@id/addFragment" />
     </fragment>
 </navigation>

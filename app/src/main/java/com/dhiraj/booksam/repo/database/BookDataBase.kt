@@ -5,12 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.dhiraj.booksam.repo.database.WordPool
 import com.example.booksam.common.Genre
 import com.example.extension.setLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Book::class], version = 1)
+@Database(entities = [Book::class, WordPool::class], version = 2)
 abstract class BookDataBase : RoomDatabase() {
     abstract fun bookDao(): BookDao
 

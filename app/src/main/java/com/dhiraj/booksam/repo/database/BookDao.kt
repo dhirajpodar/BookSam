@@ -2,6 +2,7 @@ package com.example.booksam.repo
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.dhiraj.booksam.repo.database.WordPool
 
 @Dao
 interface BookDao {
@@ -19,4 +20,7 @@ interface BookDao {
 
     @Query("DELETE FROM book_table")
     fun deleteAll()
+
+    @Query("SELECT * from word_pool")
+    fun getAllWords(): LiveData<List<WordPool>>
 }

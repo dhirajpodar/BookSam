@@ -19,8 +19,20 @@ interface BookDao {
     suspend fun delete(book: Book)
 
     @Query("DELETE FROM book_table")
-    fun deleteAll()
+    fun deleteAllBooks()
 
     @Query("SELECT * from word_pool")
     fun getAllWords(): LiveData<List<WordPool>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(wordPool: WordPool)
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun update(wordPool: WordPool)
+
+    @Delete
+    suspend fun delete(wordPool: WordPool)
+
+    @Query("DELETE FROM word_pool")
+    fun deleteAllWords()
 }

@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.booksam.bookdetail.SummaryViewModel
+import com.example.booksam.bookdetail.WordAdapter
+import com.example.booksam.repo.database.Word
 import com.example.extension.setLog
 import kotlinx.android.synthetic.main.custom_word_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_word.view.*
@@ -35,6 +38,10 @@ class WordFragment : Fragment() {
         view.fb_add.setOnClickListener {
             showWordInputDialog()
         }
+        view.rv_words.apply {
+            layoutManager = LinearLayoutManager(context)
+        }
+
         return view
     }
 

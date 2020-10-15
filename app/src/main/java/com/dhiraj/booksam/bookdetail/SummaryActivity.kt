@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_summary.*
 
 class SummaryActivity : BaseActivity<ActivitySummaryBinding, SummaryViewModel>() {
 
-    private var book: Book? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)

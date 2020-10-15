@@ -43,51 +43,50 @@ abstract class BookDataBase : RoomDatabase() {
                 super.onOpen(db)
                 scope.launch {
                     INSTANCE?.let {
-                        it.bookDao().insert(
-                            Book(
-                                "Book Name 1",
-                                "Book Author 1",
-                                Genre.SPIRITUAL.genre,
-                                3F,
-                                false
-                            )
-
+                        var book = Book(
+                            "Book Name 1",
+                            "Book Author 1",
+                            Genre.SPIRITUAL.genre,
+                            3F,
+                            false
                         )
-                        setLog("Book Name 1 added")
+                        it.bookDao().insert(book)
+                        setLog("Book Name 1 added with ${book.bookId}")
 
-
-                        it.bookDao().insert(
-                            Book(
-                                "Book Name 2",
-                                "Book Author 2",
-                                Genre.SPIRITUAL.genre,
-                                2F,
-                                false
-                            )
+                        book = Book(
+                            "Book Name 2",
+                            "Book Author 2",
+                            Genre.SPIRITUAL.genre,
+                            2F,
+                            false
                         )
-                        setLog("Book Name 2 added")
-
                         it.bookDao().insert(
-                            Book(
-                                "Book Name 3",
-                                "Book Author 3",
-                                Genre.BUSINESS.genre,
-                                3F,
-                                false
-                            )
+                            book
                         )
-                        setLog("Book Name 3 added")
+                        setLog("Book Name 2 added with ${book.bookId}")
 
-                        it.bookDao().insert(
-                            Book(
-                                "Book Name 4",
-                                "Book Author 4",
-                                Genre.BUSINESS.genre,
-                                2F,
-                                false
-                            )
+                        book = Book(
+                            "Book Name 3",
+                            "Book Author 3",
+                            Genre.BUSINESS.genre,
+                            3F,
+                            false
                         )
-                        setLog("Book Name 4 added")
+                        it.bookDao().insert(
+                            book
+                        )
+                        setLog("Book Name 3 added with ${book.bookId}")
+                        book = Book(
+                            "Book Name 4",
+                            "Book Author 4",
+                            Genre.BUSINESS.genre,
+                            2F,
+                            false
+                        )
+                        it.bookDao().insert(
+                            book
+                        )
+                        setLog("Book Name 4 added with ${book.bookId}")
                     }
                 }
             }

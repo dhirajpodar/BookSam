@@ -3,6 +3,9 @@ package com.example.booksam.bookdetail
 import android.content.Context
 import android.os.Bundle
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.R
@@ -30,6 +33,8 @@ class SummaryActivity : BaseActivity<ActivitySummaryBinding, SummaryViewModel>()
         getViewModel().setBook(bookInString)
 
     }
+
+
 
 
     override fun getLayout(): Int = R.layout.activity_summary

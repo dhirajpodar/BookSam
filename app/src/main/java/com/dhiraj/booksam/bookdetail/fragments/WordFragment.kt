@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.booksam.bookdetail.SummaryActivity
 import com.example.booksam.bookdetail.SummaryViewModel
 import com.example.booksam.bookdetail.WordAdapter
 import com.example.booksam.repo.database.Word
 import com.example.extension.setLog
+import kotlinx.android.synthetic.main.activity_summary.*
 import kotlinx.android.synthetic.main.custom_word_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_word.view.*
 
@@ -27,6 +30,21 @@ class WordFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         summaryViewModel = ViewModelProvider(this).get(SummaryViewModel::class.java)
+        initObserver()
+    }
+
+    private fun initObserver() {
+        summaryViewModel.isLoading.observe(this, Observer {
+            if (it) {
+                (context as SummaryActivity).rl_progressBar.visibility = View.VISIBLE
+            } else {
+                (context as SummaryActivity).rl_progressBar.visibility = View.GONE
+            }
+        })
+
+        summaryViewModel.responseMessage.observe(this, Observer {
+            (context as SummaryActivity).showToast(it)
+        })
     }
 
     override fun onCreateView(

@@ -1,10 +1,9 @@
 package com.example.booksam.repo
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.dhiraj.booksam.repo.database.DataConverter
 import com.dhiraj.booksam.repo.database.WordPool
 import com.example.booksam.common.Genre
 import com.example.extension.setLog
@@ -12,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(entities = [Book::class, WordPool::class], version = 2)
+@TypeConverters(DataConverter::class)
 abstract class BookDataBase : RoomDatabase() {
     abstract fun bookDao(): BookDao
 

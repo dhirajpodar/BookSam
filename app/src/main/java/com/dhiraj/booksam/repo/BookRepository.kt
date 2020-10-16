@@ -7,10 +7,14 @@ import com.dhiraj.booksam.repo.database.WordPool
 import com.example.android.response.Response
 import com.example.android.service.RetrofitClient
 import com.example.booksam.repo.database.Word
-import com.example.booksam.repo.service.response.Dictionary
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import com.dhiraj.booksam.repo.service.response.Dictionary
+import com.example.extension.setLog
+import com.example.extension.toJsonString
+import com.example.extension.toObj
+import com.example.extension.toObjList
+import retrofit2.Call
+import retrofit2.Callback
+import java.util.*
 
 class BookRepository(private val bookDao: BookDao) {
 
@@ -36,38 +40,68 @@ class BookRepository(private val bookDao: BookDao) {
     }
 
     @SuppressLint("CheckResult")
-    fun getWordMeaning(word: String, onDownloadComplete: OnDownloadComplete) {
-        val compositeDisposable = CompositeDisposable()
-        val observable = apiService.getMeaning(word)
-        observable.map {
-            retriveWordDetail(it)
-        }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                val response = Response(200.toString(), "SUCCESS", it)
-                onDownloadComplete.wordDetail(response)
-            }, {
-                val response = Response(400.toString(), "FAILED", null)
-                onDownloadComplete.wordDetail(response)
-            }, {
+    fun getWordMeaning(
+        word: String,
+        onDownloadComplete: OnDownloadComplete
+    ) {
 
-            }, {
-                compositeDisposable.add(it)
-            })
+        apiService.getMeaning(word.toLowerCase(Locale.ENGLISH)).enqueue(object : Callback<Any> {
+            override fun onFailure(call: Call<Any>, t: Throwable) {
+                setLog("BookRepo::::${t.localizedMessage}")
+                onDownloadComplete.wordDetail(
+                    Response(
+                        400.toString(),
+                        t.localizedMessage,
+                        null
+                    )
+                )
+            }
+
+            override fun onResponse(call: Call<Any>, response: retrofit2.Response<Any>) {
+                if (response.isSuccessful) {
+                    setLog("BookRepo::::${response.isSuccessful}")
+                    if (response.body() is List<*>) {
+                        setLog("BookRepo::::${response.body()}")
+                        onDownloadComplete.wordDetail(
+                            Response(
+                                200.toString(),
+                                response.message(),
+                                retriveWordDetail(response.body() as List<Dictionary>)
+                            )
+                        )
+                    } else {
+                        setLog("BookRepo::::${response.message()}")
+                        onDownloadComplete.wordDetail(
+                            Response(
+                                response.code().toString(),
+                                response.message(),
+                                null
+                            )
+                        )
+                    }
+                }
+            }
+        })
+
 
     }
 
-    private fun retriveWordDetail(dictionaries: List<Dictionary>): Word {
-        val text: String = dictionaries.get(0).word
+    private fun retriveWordDetail(dictionaryList: List<Dictionary>): Word {
+        setLog("BookRepo:::${dictionaryList.toJsonString()}")
+        val dictionary = dictionaryList[0].toJsonString().toObj(Dictionary::class.java)
+        val text: String = dictionary.word
         val meaning: String =
-            dictionaries.get(0).meanings.get(0).definitions.get(0).definition
-        val partOfSpeech: String = dictionaries.get(0).meanings.get(0).partOfSpeech
-        val audio: String = dictionaries.get(0).phonetics.get(0).audio
-        return Word(text, partOfSpeech, meaning, audio)
+            dictionary.meanings.get(0).definitions.get(0).definition
+        val partOfSpeech: String = dictionary.meanings.get(0).partOfSpeech
+        val audio: String = dictionary.phonetics.get(0).audio
+        val word = Word(text, partOfSpeech, meaning, audio)
+        setLog("BookRepo:::${word}")
+
+        return word
     }
 
     interface OnDownloadComplete {
         fun wordDetail(response: Response)
     }
 }
+

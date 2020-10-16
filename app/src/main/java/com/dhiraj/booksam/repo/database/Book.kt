@@ -18,8 +18,6 @@ data class Book(
     @PrimaryKey(autoGenerate = true)
     var bookId: Int = Random.nextInt(100, 999)
 
-//    var words = arrayListOf<String>()
-    var phrases = arrayListOf<String>()
 
 }
 

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.booksam.bookdetail.SummaryViewModel
+import com.dhiraj.booksam.bookdetail.SummaryViewModel
 import kotlinx.android.synthetic.main.fragment_summary.view.*
 
 /**

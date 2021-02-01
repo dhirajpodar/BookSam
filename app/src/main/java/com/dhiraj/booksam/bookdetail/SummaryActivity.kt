@@ -1,13 +1,12 @@
-package com.example.booksam.bookdetail
+package com.dhiraj.booksam.bookdetail
 
 import android.content.Context
 import android.os.Bundle
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProvider
 import com.dhiraj.base.BaseActivity
 import com.example.booksam.R
+import com.example.booksam.BR
 import com.example.booksam.databinding.ActivitySummaryBinding
-import com.example.extension.toObj
 import com.example.booksam.repo.Book
 import kotlinx.android.synthetic.main.activity_summary.*
 

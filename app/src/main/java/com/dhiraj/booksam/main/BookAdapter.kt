@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.booksam.repo.Book
 import com.example.booksam.R
 import com.example.booksam.add.AddActivity
-import com.example.booksam.bookdetail.SummaryActivity
+import com.dhiraj.booksam.bookdetail.SummaryActivity
 import com.example.extension.toJsonString
 import kotlinx.android.synthetic.main.custom_book_view.view.*
 

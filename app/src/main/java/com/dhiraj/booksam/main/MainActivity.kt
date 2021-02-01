@@ -9,7 +9,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dhiraj.base.BaseActivity
@@ -59,9 +58,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), Lifecyc
             override fun onFinish() {
                 val position = viewPager_image.currentItem
                 if (position == 9) {
-                    viewPager_image.setCurrentItem(0)
+                    viewPager_image.currentItem = 0
                 } else {
-                    viewPager_image.setCurrentItem(position + 1)
+                    viewPager_image.currentItem = position + 1
                 }
                 initTimer()
             }

@@ -1,4 +1,4 @@
-package com.example.booksam.bookdetail
+package com.dhiraj.booksam.bookdetail
 
 import androidx.lifecycle.MutableLiveData
 import com.dhiraj.base.BaseViewModel
@@ -8,7 +8,7 @@ import com.example.extension.setLog
 import com.example.extension.toObj
 
 class SummaryViewModel : BaseViewModel() {
-    val TAG = "SummaryViewModel"
+    private val TAG = "SummaryViewModel"
     val book by lazy { MutableLiveData<Book>() }
     val words by lazy { MutableLiveData<List<Word>>() }
 
